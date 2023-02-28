@@ -2,6 +2,7 @@ package cola
 
 import (
 	"fmt"
+	"strconv"
 
 	"edd.com/proyectofase1/estructura"
 )
@@ -49,4 +50,26 @@ func (l *Cola) I() {
 
 func (l *Cola) Vacio() bool {
 	return l.Inicio == nil
+}
+
+func (l *Cola) GraphCode() string {
+	temp := l.Inicio
+	nodes := ""
+	conn := ""
+	counter := 0
+	for temp.Siguiente != nil {
+		nodes += "N" + strconv.Itoa(counter) + "[label=\"Carnet:" + strconv.Itoa(temp.Estudiante.Carnet) + "\nNombre: " + temp.Estudiante.Nombre + "\"];\n"
+		conn += "N" + strconv.Itoa(counter) + "->"
+		temp = temp.Siguiente
+		counter++
+	}
+	nodes += "N" + strconv.Itoa(counter) + "[label=\"Carnet:" + strconv.Itoa(temp.Estudiante.Carnet) + "\nNombre: " + temp.Estudiante.Nombre + "\"];\n"
+	conn += "N" + strconv.Itoa(counter) + "\n"
+
+	return "digraph G {\n" +
+		"node[shape=rectangle, style=filled];\n" +
+		"rankdir=LR;\n" +
+		nodes + // NODOS
+		conn + // CONEXIONES
+		"\n}"
 }

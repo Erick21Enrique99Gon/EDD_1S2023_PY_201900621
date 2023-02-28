@@ -2,6 +2,7 @@ package lista_doble
 
 import (
 	"fmt"
+	"strconv"
 
 	"edd.com/proyectofase1/estructura"
 )
@@ -46,6 +47,43 @@ func (l *Lista_doble) I() {
 	}
 }
 
+func (l *Lista_doble) ToJson() string {
+	contenido := "{\n"
+	contenido += "\t\"alumnos\": [\n"
+	aux := l.Cabeza
+
+	for aux.Siguiente != nil {
+		contenido += "\t\t{\n"
+		contenido += "\t\t\t\"nombre\": \"" + aux.Estudiante.Nombre + " " + aux.Estudiante.Apellido + "\", \n"
+		contenido += "\t\t\t\"carnet\": " + strconv.Itoa(aux.Estudiante.Carnet) + ", \n"
+		contenido += "\t\t\t\"password\": \"" + aux.Estudiante.Password + "\", \n"
+		contenido += "\t\t\t\"Carpeta_Raiz\": \" " + aux.Estudiante.Carpeta_Raiz + " \" \n"
+		contenido += "\t\t},\n"
+		aux = aux.Siguiente
+	}
+
+	contenido += "\t\t{\n"
+	contenido += "\t\t\t\"nombre\": \"" + aux.Estudiante.Nombre + " " + aux.Estudiante.Apellido + "\", \n"
+	contenido += "\t\t\t\"carnet\": " + strconv.Itoa(aux.Estudiante.Carnet) + ", \n"
+	contenido += "\t\t\t\"password\": \"" + aux.Estudiante.Password + "\", \n"
+	contenido += "\t\t\t\"Carpeta_Raiz\": \"/\" \n"
+	contenido += "\t\t}\n"
+	contenido += "\t]\n"
+	contenido += "}"
+	return contenido
+}
+
+func (l *Lista_doble) EncontrarEstudiante(c int, p string) (e *estructura.Estudiante) {
+	temp := l.Cabeza
+	for temp != nil {
+		if temp.Estudiante.Carnet == c && temp.Estudiante.Password == p {
+			return temp.Estudiante
+		}
+		temp = temp.Siguiente
+	}
+	return nil
+}
+
 func (l *Lista_doble) Vacio() bool {
 	return l.Cabeza == nil
 }
@@ -55,29 +93,20 @@ func (l *Lista_doble) Insertar_en_Orden(e *estructura.Estudiante) {
 	if l.Cabeza == nil {
 		l.Cabeza = nuevo_Nodo
 		l.Cola = nuevo_Nodo
-		fmt.Println("--------Vacio-----")
 	} else {
-		if l.Cabeza.GetCarnet() >= nuevo_Nodo.GetCarnet() {
+		if l.Cabeza.GetCarnet() > nuevo_Nodo.GetCarnet() {
 			l.Cabeza.Anterior = nuevo_Nodo
 			nuevo_Nodo.Siguiente = l.Cabeza
 			l.Cabeza = nuevo_Nodo
-			fmt.Println("--------Ca-----")
-		} else if l.Cola.GetCarnet() <= nuevo_Nodo.GetCarnet() {
+		} else if l.Cola.GetCarnet() < nuevo_Nodo.GetCarnet() {
 			l.Cola.Siguiente = nuevo_Nodo
 			nuevo_Nodo.Anterior = l.Cola
 			l.Cola = nuevo_Nodo
-			fmt.Println("--------Cola-----")
 		} else {
 			temp := l.Cabeza
 			puesto := false
 			for temp.Siguiente != nil && !puesto {
 				if temp.Estudiante.Carnet == nuevo_Nodo.Estudiante.Carnet {
-					aux := temp.Anterior
-					temp.Anterior = nuevo_Nodo
-					nuevo_Nodo.Siguiente = temp
-					nuevo_Nodo.Anterior = aux
-					aux.Siguiente = nuevo_Nodo
-					fmt.Println("--------RE----")
 					puesto = true
 
 				} else if temp.Estudiante.Carnet < nuevo_Nodo.Estudiante.Carnet && temp.Siguiente.Estudiante.Carnet > nuevo_Nodo.Estudiante.Carnet {
@@ -86,9 +115,7 @@ func (l *Lista_doble) Insertar_en_Orden(e *estructura.Estudiante) {
 					nuevo_Nodo.Anterior = temp
 					nuevo_Nodo.Siguiente = aux
 					aux.Anterior = nuevo_Nodo
-					temp = temp.Siguiente
 					puesto = true
-					fmt.Println("--------Vacio-----")
 				}
 
 				temp = temp.Siguiente
@@ -110,4 +137,65 @@ func (l *Lista_doble) Repetido(e *estructura.Estudiante) bool {
 		return true
 	}
 	return false
+}
+
+func (l *Lista_doble) GraphCode() string {
+	temp := l.Cabeza
+	nodes := ""
+	conn := ""
+	connPILAS := ""
+	counter := 0
+	rankear := ""
+	for temp.Siguiente != nil {
+		nodes += "N" + strconv.Itoa(counter) + "[label=\"Carnet:" + strconv.Itoa(temp.Estudiante.Carnet) + "\nNombre: " + temp.Estudiante.Nombre + " " + temp.Estudiante.Apellido + "\"];\n"
+		if !temp.Estudiante.Log.Vacio() {
+			nodes += temp.Estudiante.Log.NodosGraph(strconv.Itoa(temp.Estudiante.Carnet))
+			connPILAS += "N" + strconv.Itoa(counter) + "-> N" + strconv.Itoa(temp.Estudiante.Carnet) + "\n"
+		}
+		conn += "N" + strconv.Itoa(counter) + "->"
+		temp = temp.Siguiente
+		counter++
+	}
+	nodes += "N" + strconv.Itoa(counter) + "[label=\"Carnet:" + strconv.Itoa(temp.Estudiante.Carnet) + "\nNombre: " + temp.Estudiante.Nombre + " " + temp.Estudiante.Apellido + "\"];\n"
+	conn += "N" + strconv.Itoa(counter) + "\n"
+	temp = l.Cola
+	for temp.Anterior != nil {
+		conn += "N" + strconv.Itoa(counter) + "->"
+		temp = temp.Anterior
+		counter--
+	}
+	conn += "N" + strconv.Itoa(counter) + "\n"
+
+	temp = l.Cabeza
+
+	rankear += "{rank = same;"
+
+	for temp != nil {
+		rankear += "N" + strconv.Itoa(counter) + ";"
+		temp = temp.Siguiente
+		counter++
+	}
+
+	rankear += "}\n"
+
+	temp = l.Cabeza
+
+	rankear += "{rank = same;"
+
+	for temp != nil {
+		if !temp.Estudiante.Log.Vacio() {
+			rankear += "N" + strconv.Itoa(temp.Estudiante.Carnet) + ";"
+		}
+		temp = temp.Siguiente
+	}
+
+	rankear += "}"
+
+	return "digraph G {\n" +
+		"node[shape=rectangle, style=filled];\n" +
+		nodes + // NODOS
+		conn + // CONEXIONES
+		connPILAS + // CONEXIONES
+		rankear +
+		"\n}"
 }

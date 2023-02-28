@@ -1,6 +1,7 @@
 package pila
 
 type Nodo_pila struct {
-	Carnet    int
+	Entrada   string
+	Fecha     string
 	Siguiente *Nodo_pila
 }

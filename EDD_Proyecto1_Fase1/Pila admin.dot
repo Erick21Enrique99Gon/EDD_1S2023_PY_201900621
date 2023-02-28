@@ -1,0 +1,6 @@
+digraph G {
+node [shape=record];
+rankdir=TB;
+N[label="{Se acepto el Estudiante &#92;n 28/02/2023 14:42|Se acepto el Estudiante 28/02/2023 14:42}"shape=Mrecord];
+N:here;
+}

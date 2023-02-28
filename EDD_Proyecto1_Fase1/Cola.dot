@@ -1,0 +1,34 @@
+digraph G {
+node[shape=rectangle, style=filled];
+rankdir=LR;
+N0[label="Carnet:201700000
+Nombre: Madara"];
+N1[label="Carnet:201700001
+Nombre: Obito"];
+N2[label="Carnet:201700002
+Nombre: Kabuto"];
+N3[label="Carnet:201700003
+Nombre: Papeles"];
+N4[label="Carnet:201700004
+Nombre: Judío"];
+N5[label="Carnet:201700005
+Nombre: Orochimaru"];
+N6[label="Carnet:201700006
+Nombre: Marionette"];
+N7[label="Carnet:201700007
+Nombre: Kakuzu"];
+N8[label="Carnet:201700008
+Nombre: Onion"];
+N9[label="Carnet:201700009
+Nombre: Kisame"];
+N10[label="Carnet:201700010
+Nombre: Deidara"];
+N11[label="Carnet:201700011
+Nombre: Itachi"];
+N12[label="Carnet:201700012
+Nombre: Aloevera"];
+N13[label="Carnet:201403877
+Nombre: Ebany"];
+N0->N1->N2->N3->N4->N5->N6->N7->N8->N9->N10->N11->N12->N13
+
+}

@@ -1,0 +1,11 @@
+digraph G {
+node[shape=rectangle, style=filled];
+N0[label="Carnet:201709018
+Nombre: Cristian Suy"];
+N1[label="Carnet:201780044
+Nombre: Leonardo Martinez"];
+N0->N1
+N1->N0
+{rank = same;N0;N1;}
+{rank = same;}
+}

@@ -2,13 +2,16 @@ package funcionesadministrador
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 
 	"edd.com/proyectofase1/cola"
 	"edd.com/proyectofase1/estructura"
 	"edd.com/proyectofase1/lista_doble"
+	"edd.com/proyectofase1/pila"
 )
 
-func RegistrarEstudiantes(cola_espera *cola.Cola, lista_registrados *lista_doble.Lista_doble) {
+func RegistrarEstudiantes(cola_espera *cola.Cola, lista_registrados *lista_doble.Lista_doble, log *pila.Pila) {
 	var (
 		carnet   int
 		nombre   string
@@ -29,7 +32,6 @@ func RegistrarEstudiantes(cola_espera *cola.Cola, lista_registrados *lista_doble
 		fmt.Println("*****************************************")
 
 		fmt.Scanln(&opcion)
-		fmt.Println((opcion))
 		switch opcion {
 		case 1:
 			if !cola_espera.Vacio() {
@@ -69,7 +71,7 @@ func RegistrarEstudiantes(cola_espera *cola.Cola, lista_registrados *lista_doble
 					fmt.Println("Ingresar Password")
 					fmt.Scanln(&password)
 					fmt.Println("*****************************************")
-					NuevoEstudiante := &estructura.Estudiante{Carnet: carnet, Nombre: nombre, Apellido: apellido}
+					NuevoEstudiante := &estructura.Estudiante{Carnet: carnet, Nombre: nombre, Apellido: apellido, Password: password, Carpeta_Raiz: "/", Log: &pila.Pila{}}
 					cola_espera.Insertar(NuevoEstudiante)
 				case 2:
 					fmt.Println("*******Aceptar Estudianes****************")
@@ -88,9 +90,10 @@ func RegistrarEstudiantes(cola_espera *cola.Cola, lista_registrados *lista_doble
 							case 1:
 								lista_registrados.Insertar_en_Orden(temp)
 								fmt.Println("         Aceptado")
-
+								log.Push("Se acepto el Estudiante")
 							case 2:
 								fmt.Println("         Rechazado")
+								log.Push("Se rechazado el Estudiante")
 							case 3:
 								cola_espera.Insertar(temp)
 							}
@@ -105,6 +108,17 @@ func RegistrarEstudiantes(cola_espera *cola.Cola, lista_registrados *lista_doble
 				}
 			}
 			registrar = 0
+		case 4:
+			records := readCsvFile("./prueba.csv")
+			for index, row := range records {
+				if index > 0 {
+					c, er := strconv.Atoi(row[0])
+					if er == nil {
+						NuevoEstudiante := &estructura.Estudiante{Carnet: c, Nombre: strings.Split(row[1], " ")[0], Apellido: strings.Split(row[1], " ")[1], Password: row[2], Carpeta_Raiz: "/", Log: &pila.Pila{}}
+						cola_espera.Insertar(NuevoEstudiante)
+					}
+				}
+			}
 		}
 	}
 }

@@ -109,7 +109,7 @@ func RegistrarEstudiantes(cola_espera *cola.Cola, lista_registrados *lista_doble
 			}
 			registrar = 0
 		case 4:
-			records := readCsvFile("./prueba.csv")
+			records := readCsvFile("./carga_masiva.csv")
 			for index, row := range records {
 				if index > 0 {
 					c, er := strconv.Atoi(row[0])

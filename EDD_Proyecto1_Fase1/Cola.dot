@@ -1,100 +1,88 @@
 digraph G {
 node[shape=rectangle, style=filled];
 rankdir=LR;
-N0[label="Carnet:201700918
-Nombre: Cristian"];
-N1[label="Carnet:201780044
-Nombre: Leonardo"];
-N2[label="Carnet:201403877
-Nombre: Ebany"];
-N3[label="Carnet:202000277
-Nombre: Diana"];
-N4[label="Carnet:202001053
-Nombre: Kevin"];
-N5[label="Carnet:201901801
-Nombre: Kevin"];
-N6[label="Carnet:201503933
-Nombre: Manolo"];
-N7[label="Carnet:202106484
+N0[label="Carnet:202106484
 Nombre: Wendi"];
-N8[label="Carnet:201944994
+N1[label="Carnet:201944994
 Nombre: Robin"];
-N9[label="Carnet:202010770
+N2[label="Carnet:202010770
 Nombre: Luis"];
-N10[label="Carnet:199919737
+N3[label="Carnet:199919737
 Nombre: Williams"];
-N11[label="Carnet:201700792
+N4[label="Carnet:201700792
 Nombre: Dennis"];
-N12[label="Carnet:200715321
+N5[label="Carnet:200715321
 Nombre: Jim"];
-N13[label="Carnet:201700907
+N6[label="Carnet:201700907
 Nombre: Alma"];
-N14[label="Carnet:201602404
+N7[label="Carnet:201602404
 Nombre: Kevin"];
-N15[label="Carnet:9616453
+N8[label="Carnet:9616453
 Nombre: Luis"];
-N16[label="Carnet:201807169
+N9[label="Carnet:201807169
 Nombre: Erick"];
-N17[label="Carnet:201710130
+N10[label="Carnet:201710130
 Nombre: Kevin"];
-N18[label="Carnet:201700315
+N11[label="Carnet:201700315
 Nombre: Alejandro"];
-N19[label="Carnet:202100953
+N12[label="Carnet:202100953
 Nombre: Damaris"];
-N20[label="Carnet:201807389
+N13[label="Carnet:201807389
 Nombre: Gladys"];
-N21[label="Carnet:201800678
+N14[label="Carnet:201800678
 Nombre: Wilmer"];
-N22[label="Carnet:202002536
+N15[label="Carnet:202002536
 Nombre: Angela"];
-N23[label="Carnet:202004060
+N16[label="Carnet:202004060
 Nombre: Gerber"];
-N24[label="Carnet:202109732
+N17[label="Carnet:202109732
 Nombre: Jose"];
-N25[label="Carnet:201403669
+N18[label="Carnet:201403669
 Nombre: William"];
-N26[label="Carnet:202004812
+N19[label="Carnet:202004812
 Nombre: Fredy"];
-N27[label="Carnet:201544815
+N20[label="Carnet:201544815
 Nombre: Jose"];
-N28[label="Carnet:202101499
+N21[label="Carnet:202101499
 Nombre: Denis"];
-N29[label="Carnet:201602516
+N22[label="Carnet:201602516
 Nombre: Bryan"];
-N30[label="Carnet:202109715
+N23[label="Carnet:202109715
 Nombre: Pablo"];
-N31[label="Carnet:199919737
+N24[label="Carnet:199919737
 Nombre: Williams"];
-N32[label="Carnet:201807351
+N25[label="Carnet:201807351
 Nombre: Brian"];
-N33[label="Carnet:202001570
+N26[label="Carnet:202001570
 Nombre: Nataly"];
-N34[label="Carnet:202109754
+N27[label="Carnet:202109754
 Nombre: Aldo"];
-N35[label="Carnet:202100265
+N28[label="Carnet:202100265
 Nombre: Maria"];
-N36[label="Carnet:202000127
+N29[label="Carnet:202000127
 Nombre: Moises"];
-N37[label="Carnet:202002591
+N30[label="Carnet:202002591
 Nombre: Jorge"];
-N38[label="Carnet:201944766
+N31[label="Carnet:201944766
 Nombre: Javier"];
-N39[label="Carnet:201900621
+N32[label="Carnet:201900621
 Nombre: Erick"];
-N40[label="Carnet:201902363
+N33[label="Carnet:201902363
 Nombre: Christopher"];
-N41[label="Carnet:202104160
+N34[label="Carnet:202104160
 Nombre: Steven"];
-N42[label="Carnet:201603028
+N35[label="Carnet:201603028
 Nombre: Oscar"];
-N43[label="Carnet:202010814
+N36[label="Carnet:202010814
 Nombre: Luis"];
-N44[label="Carnet:201404028
+N37[label="Carnet:201404028
 Nombre: Helber"];
-N45[label="Carnet:202000896
+N38[label="Carnet:202000896
 Nombre: Javier"];
-N46[label="Carnet:8318054
+N39[label="Carnet:8318054
 Nombre: Hugo"];
-N0->N1->N2->N3->N4->N5->N6->N7->N8->N9->N10->N11->N12->N13->N14->N15->N16->N17->N18->N19->N20->N21->N22->N23->N24->N25->N26->N27->N28->N29->N30->N31->N32->N33->N34->N35->N36->N37->N38->N39->N40->N41->N42->N43->N44->N45->N46
+N40[label="Carnet:201503933
+Nombre: Manolo"];
+N0->N1->N2->N3->N4->N5->N6->N7->N8->N9->N10->N11->N12->N13->N14->N15->N16->N17->N18->N19->N20->N21->N22->N23->N24->N25->N26->N27->N28->N29->N30->N31->N32->N33->N34->N35->N36->N37->N38->N39->N40
 
 }

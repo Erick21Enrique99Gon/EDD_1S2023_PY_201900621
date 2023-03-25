@@ -1,6 +1,6 @@
 digraph G {
 node [shape=record];
 rankdir=TB;
-N[label="{Se acepto el Estudiante &#92;n 28/02/2023 14:42|Se acepto el Estudiante 28/02/2023 14:42}"shape=Mrecord];
+N[label="{Se rechazado el Estudiante &#92;n 01/03/2023 21:09|Se rechazado el Estudiante &#92;n 01/03/2023 21:09|Se acepto el Estudiante &#92;n 01/03/2023 21:09|Se acepto el Estudiante &#92;n 01/03/2023 21:09|Se acepto el Estudiante &#92;n 01/03/2023 21:09|Se acepto el Estudiante &#92;n 01/03/2023 21:09|Se acepto el Estudiante 01/03/2023 21:08}"shape=Mrecord];
 N:here;
 }

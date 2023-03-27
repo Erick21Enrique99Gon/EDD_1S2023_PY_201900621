@@ -1,4 +1,4 @@
-let matrix = new SparseMatrix();
+/*let matrix = new SparseMatrix();
 
 function handleSubmit(e) {
     e.preventDefault();
@@ -26,4 +26,5 @@ function showGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = `digraph G { ${matrix.graph()} }`
     $("#graph").attr("src", url + body);
-}
+}*/
+

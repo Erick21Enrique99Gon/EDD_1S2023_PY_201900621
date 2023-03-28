@@ -28,3 +28,21 @@ function showGraph() {
     $("#graph").attr("src", url + body);
 }*/
 
+let avl = require('./avl-tree');
+let t = new avl();
+
+t.insertValue(9);
+t.insertValue(7);
+t.insertValue(3);
+t.insertValue(4);
+t.insertValue(5);
+t.Graph();
+/*let avl = require('./circular');
+let c = new avl();
+c.insertar(1);
+c.insertar(2);
+c.insertar(3);
+c.insertar(4);
+c.insertar(5);
+c.insertar(6);
+c.graph();*/

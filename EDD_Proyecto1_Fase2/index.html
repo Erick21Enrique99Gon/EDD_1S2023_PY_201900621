@@ -26,30 +26,31 @@
 				<h3>Ingresar</h3>
 			</div>
 			<div class="card-body">
-				<form>
+				<form form class="form" onsubmit="login(event)">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="username">
+						<input type="text" class="form-control" placeholder="username" id="username" name="username">
 						
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
-						<input type="password" class="form-control" placeholder="password">
+						<input type="password" class="form-control" placeholder="password" id="password" name="password">
 					</div>
 					<div class="row align-items-center administrador">
 						<input type="checkbox">Administrador
 					</div>
 					<div class="form-group">
-						<input type="submit" value="Login" class="btn float-right login_btn">
+						<input type="submit" value="Ingresar" class="btn float-left ingresar_btn">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="./js/src/login.js"></script>
 </body>
 </html>

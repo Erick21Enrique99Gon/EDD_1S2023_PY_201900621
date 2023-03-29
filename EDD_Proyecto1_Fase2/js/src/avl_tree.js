@@ -135,10 +135,10 @@ class AvlTree {
             </tr>
         `;
         if (current.left != null) {
-            row += this.#inOrderRecursive(current.left);
+            row += this.#preOrderRecursive(current.left);
         }
         if (current.right != null) {
-            row += this.#inOrderRecursive(current.right);
+            row += this.#preOrderRecursive(current.right);
         }
         return row;
     }
@@ -150,10 +150,10 @@ class AvlTree {
     #postOrderRecursive(current) {
         let row = "";
         if (current.left != null) {
-            row += this.#inOrderRecursive(current.left);
+            row += this.#postOrderRecursive(current.left);
         }
         if (current.right != null) {
-            row += this.#inOrderRecursive(current.right);
+            row += this.#postOrderRecursive(current.right);
         }
         row += `
             <tr>
@@ -163,6 +163,20 @@ class AvlTree {
             </tr>
         `;
         return row;
+    }
+
+    search(carnet) {
+        var nodo = this.root;
+        while (nodo != null) {
+            if (nodo.item.carnet == carnet) {
+                return nodo.ite;
+            } else if (carnet > nodo.item.carnet) {
+                nodo = nodo.right;
+            } else {
+                nodo = nodo.left;
+            }
+        }
+        return null;
     }
 }
 

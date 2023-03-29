@@ -19,7 +19,7 @@ function handleSubmit(e) {
     localStorage.setItem("matriz", JSON.stringify(JSON.decycle(matrix)));
     //localStorage.clear() para limpiar
 }
-
+arb
 function showGraph() {
     let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("matriz")));
     matrix.head = temp.head;
@@ -27,22 +27,42 @@ function showGraph() {
     let body = `digraph G { ${matrix.graph()} }`
     $("#graph").attr("src", url + body);
 }*/
+let matrix = new SparseMatrix();
+let avlTree = new AvlTree();
+function loadStudentsForm(e) {
+    e.preventDefault();
+    let avlTree = new AvlTree();
+    const formData = new FormData(e.target);
+    const form = Object.fromEntries(formData);
+    let studentsArray = [];
+    try {
+        let fr = new FileReader();
+        fr.readAsText(form.inputFile);
+        fr.onload = () => {
 
-let avl = require('./avl-tree');
-let t = new avl();
+            studentsArray = JSON.parse(fr.result).alumnos;
+            //AGREGAR A LA TABLA LOS ALUMNOS CARGADOS 
+            $('#studentsTable tbody').html(
+                studentsArray.map((item, index) => {
+                    return (`
+                        <tr>
+                            <th>${item.carnet}</th>
+                            <td>${item.nombre}</td>
+                            <td>${item.password}</td>
+                        </tr>
+                    `);
+                }).join('')
+            )
+            for (let i = 0; i < studentsArray.length; i++) {
+                avlTree.insertValue(studentsArray[i]);
+            }
+            // GUARDAR EN LOCAL STORAGE
+            localStorage.setItem("avlTree", JSON.stringify(avlTree))
+            alert('Alumnos cargados con éxito!')
+        }
+    } catch (error) {
+        console.log(error);
+        alert("Error en la inserción");
+    }
 
-t.insertValue(9);
-t.insertValue(7);
-t.insertValue(3);
-t.insertValue(4);
-t.insertValue(5);
-t.Graph();
-/*let avl = require('./circular');
-let c = new avl();
-c.insertar(1);
-c.insertar(2);
-c.insertar(3);
-c.insertar(4);
-c.insertar(5);
-c.insertar(6);
-c.graph();*/
+}

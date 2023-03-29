@@ -1,12 +1,112 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Administrador</title>
+    <!--Made with love by Mutiullah Samim -->
+
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
+
 <body>
-    <h1>Bien</h1>
+    <div class="container">
+        <div class="Titulos_admin">
+            <h1>Dashboard Admin</h1>
+            <hr>
+        </div>
+        <div class="d-flex ">
+            <div class="col-6 card_ingreso_admin">
+                <div class="card-header">
+                    <h3>Subir estudiantes</h3>
+                </div>
+                <div class="card-body">
+                    <form form class="form" onsubmit="loadStudentsForm(event)">
+                        <div class="input-group form-group">
+                            <input type="file" id="inputFile" name="inputFile" class="form-control"
+                                placeholder="Pos. X">
+                        </div>
+                        <div class="input-group form-group">
+                            <input type="submit" value="Cargar Estudiantes"
+                                class="btn float-right ingresar_estudiantes_btn_admin">
+                        </div>
+                    </form>
+                    <form action="">
+                        <div class="input-group form-group">
+                            <a onclick="showAvlGraph()" class="btn float-right ingresar_estudiantes_btn_admin ">Gráfica del Arbol</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-8 card_mostrar_admin">
+                <div class="card-header">
+                    <h3>Estudiantes Cargados</h3>
+                </div>
+                <div class="card-body">
+                    <form class="form" onsubmit="showStudentsForm(event)">
+                        <div class="row">
+                            <div class="col-8">
+                                <select id="traversal" name="traversal" class="form-select">
+                                    <option selected disabled>Seleccionar Recorrido</option>
+                                    <option value="inOrder">In Order</option>
+                                    <option value="preOrder">Pre Order</option>
+                                    <option value="postOrder">Post Order</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <button type="submit"
+                                    class="btn float-right mostrar_estudiantes_btn_admin">Mostrar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="studentsTable">
+                        <table class="table text-light">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Carnet</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Contraseña</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Titulos_admin">
+            <h1>Reporte de Árbol AVL</h1>
+            <hr>
+            <!-- <img id="graph"> -->
+        </div>
+    </div>
+    <!-- Importacion de archivos -->
+    <script src="./js/src/login.js"></script>
+    <script src="./js/src/sparase_matrix.js"></script>
+    <script type="text/javascript" src="./js/src/avl_tree.js"></script>
+    <script src="./js/src/index.js"></script>
+    <!-- "Librerias" -->
+    <script src="./js/src/lib/cycle.js"></script>
+    <!-- Query -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

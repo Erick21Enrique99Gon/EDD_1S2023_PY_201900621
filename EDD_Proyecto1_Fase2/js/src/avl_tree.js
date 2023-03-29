@@ -1,17 +1,18 @@
 class AvlNode {
-    constructor(/*item*/ v) {
-        this./*item*/v = /*item*/v;
+    constructor(item ) {
+        this.item = item;
         this.left = null;
         this.right = null;
         this.height = 0;
     }
 }
 
-let = nodes = ""
-let = connections = ""
+let  nodes = ""
+let  connections = ""
 
 class AvlTree {
     constructor() {
+        console.log("AVL Tree");
         this.root = null;
     }
 
@@ -46,37 +47,10 @@ class AvlTree {
         node.right = this.#rotateLeft(node.right);
         return this.#rotateRight(node);
     }
-    insertValue(/*item*/v) {
-        this.root = this.#insertRecursive(/*item*/v, this.root);
+    insertValue(item) {
+        this.root = this.#insertRecursive(item, this.root);
     }
 
-    // #insertNodeRecursive(/*item*/v, node) {
-    //     if (node == null) {
-    //         node = new AvlNode(/*item*/v);
-    //     } else if(/*item.carne*/v < node./*item.carne*/v) {
-    //         node.left = this.#insertNodeRecursive(/*item*/v, node.left);
-    //         if (this.getHeight(node.left)-this.getHeight(node.right) == 2) {
-    //             if (/*item.carne*/v < node.left./*item.carne*/v) {
-    //                 node = this.#rotateLeft(node);
-    //             } else {
-    //                 node = this.#doubleLeft(node);
-    //             }
-    //         }
-    //     }else if (/*item.carne*/v > node./*item.carne*/v) {
-    //         node.right = this.#insertNodeRecursive(/*item*/v, node.right);
-    //         if (this.getHeight(node.right)-this.getHeight(node.left) == 2) {
-    //             if (/*item.carne*/v < node.right./*item.carne*/v) {
-    //                 node = this.#rotateRight(node);
-    //             } else {
-    //                 node = this.#doubleRight(node);
-    //             }
-    //         }
-    //     }else {
-    //         console.log("Elemento ya existe en el árbol");
-    //     }
-    //     node.height = this.getMaxHeight(this.getHeight(node.left), this.getHeight(node.right)) + 1;
-    //     return node;
-    // }
     #insertRecursive(v, node) {
         if (node == null) {
             node = new AvlNode(v);
@@ -114,16 +88,15 @@ class AvlTree {
     }
     #GraphRecursive(node) {
         if (node != null) {
-            nodes += node./*item.carne*/v + "[label=\"" + node./*item.carne*/v + "\"];\n";
+            nodes += node.item.carne + "[label=\"" + node.item.carne + "\"];\n";
             if (node.left != null) {
-                connections += node./*item.carne*/v + "->" + node.left./*item.carne*/v + ";\n";
+                connections += node.item.carne + "->" + node.left.item.carne + ";\n";
                 this.#GraphRecursive(node.left);
             }
             if (node.right != null) {
-                connections += node./*item.carne*/v + "->" + node.right./*item.carne*/v + ";\n";
+                connections += node.item.carne + "->" + node.right.item.carne + ";\n";
                 this.#GraphRecursive(node.right);
             }
         }
     }
 }
-module.exports = AvlTree;

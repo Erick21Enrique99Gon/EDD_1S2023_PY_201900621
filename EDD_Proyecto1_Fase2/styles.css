@@ -3,17 +3,17 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 html,
+
 body {
     background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     height: 100%;
     font-family: 'Numans', sans-serif;
 }
 
 .container {
     height: 100%;
-    align-content: center;
 }
 
 .card {
@@ -58,7 +58,7 @@ body {
 input:focus {
     outline: 0 0 0 0 !important;
     box-shadow: 0 0 0 0 !important;
-
+    
 }
 
 .administrador {
@@ -91,4 +91,32 @@ input:focus {
 .generar_btn:hover {
     color: black;
     background-color: white;
+}
+/* administrador */
+.Titulos_admin{
+    color: white;
+}
+
+.card_ingreso_admin {
+    height: 300px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.card_mostrar_admin {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.ingresar_estudiantes_btn_admin {
+    color: black;
+    background-color: #FFC312;
+    width: 100%;
+}
+.mostrar_estudiantes_btn_admin {
+    color: black;
+    background-color: #FFC312;
 }

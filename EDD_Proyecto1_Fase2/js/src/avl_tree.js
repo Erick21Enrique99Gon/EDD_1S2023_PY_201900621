@@ -51,22 +51,22 @@ class AvlTree {
         this.root = this.#insertRecursive(item, this.root);
     }
 
-    #insertRecursive(v, node) {
+    #insertRecursive(item, node) {
         if (node == null) {
-            node = new AvlNode(v);
-        } else if (v < node.v) {
-            node.left = this.#insertRecursive(v, node.left);
-            if (this.getHeight(node.left) - this.getHeight(node.right) == 2) {
-                if (v < node.left.v) {
+            node = new AvlNode(item);
+        } else if (item.carnet < node.item.carnet) {
+            node.left = this.#insertRecursive(item, node.left);
+            if (this.getHeight(node.right) - this.getHeight(node.left) == 2) {
+                if (item.carnet < node.left.item.carnet) {
                     node = this.#rotateLeft(node);
                 } else {
                     node = this.#doubleLeft(node);
                 }
             }
-        } else if (v > node.v) {
-            node.right = this.#insertRecursive(v, node.right);
-            if (this.getHeight(node.left) - this.getHeight(node.right) == 2) {
-                if (v > node.right.v) {
+        } else if (item.carnet > node.item.carnet) {
+            node.right = this.#insertRecursive(item, node.right);
+            if (this.getHeight(node.right) - this.getHeight(node.left) == 2) {
+                if (item.carnet > node.right.item.carnet) {
                     node = this.#rotateRight(node);
                 } else {
                     node = this.#doubleRight(node);
@@ -88,15 +88,82 @@ class AvlTree {
     }
     #GraphRecursive(node) {
         if (node != null) {
-            nodes += node.item.carne + "[label=\"" + node.item.carne + "\"];\n";
+            nodes += node.item.carnet + "[label=\"" + node.item.carnet + " " + node.item.nombre + " Altura: " + this.getHeight(node) + "\" shape=box];\n";
             if (node.left != null) {
-                connections += node.item.carne + "->" + node.left.item.carne + ";\n";
+                connections += node.item.carnet + "->" + node.left.item.carnet + ";\n";
                 this.#GraphRecursive(node.left);
             }
             if (node.right != null) {
-                connections += node.item.carne + "->" + node.right.item.carne + ";\n";
+                connections += node.item.carnet + "->" + node.right.item.carnet + ";\n";
                 this.#GraphRecursive(node.right);
             }
         }
     }
+    inOrder() {
+        let html = this.#inOrderRecursive(this.root);
+        return html;
+    }
+    #inOrderRecursive(current) {
+        let row = "";
+        if (current.left != null) {
+            row += this.#inOrderRecursive(current.left);
+        }
+        row += `
+            <tr>
+                <th>${current.item.carnet}</th>
+                <td>${current.item.nombre}</td>
+                <td>${current.item.password}</td>
+            </tr>
+        `;
+        if (current.right != null) {
+            row += this.#inOrderRecursive(current.right);
+        }
+        return row;
+    }
+    
+    preOrder() {
+        let html = this.#preOrderRecursive(this.root);
+        return html;
+    }
+    #preOrderRecursive(current) {
+        let row = "";
+        row += `
+            <tr>
+                <th>${current.item.carnet}</th>
+                <td>${current.item.nombre}</td>
+                <td>${current.item.password}</td>
+            </tr>
+        `;
+        if (current.left != null) {
+            row += this.#inOrderRecursive(current.left);
+        }
+        if (current.right != null) {
+            row += this.#inOrderRecursive(current.right);
+        }
+        return row;
+    }
+
+    postOrder() {
+        let html = this.#postOrderRecursive(this.root);
+        return html;
+    }
+    #postOrderRecursive(current) {
+        let row = "";
+        if (current.left != null) {
+            row += this.#inOrderRecursive(current.left);
+        }
+        if (current.right != null) {
+            row += this.#inOrderRecursive(current.right);
+        }
+        row += `
+            <tr>
+                <th>${current.item.carnet}</th>
+                <td>${current.item.nombre}</td>
+                <td>${current.item.password}</td>
+            </tr>
+        `;
+        return row;
+    }
 }
+
+module.exports = AvlTree;

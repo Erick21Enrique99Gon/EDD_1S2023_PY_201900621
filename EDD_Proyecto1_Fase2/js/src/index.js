@@ -1,5 +1,21 @@
-/*let matrix = new SparseMatrix();
+let avlTree = new AvlTree();
+let matrix = new SparseMatrix();
 
+function login(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const form = Object.fromEntries(formData);
+    let username = form.username;
+    let password = form.password;
+    if (username == "Admin" && password == "Admin") {
+        window.location = "admin.html";
+    }
+    else {
+        alert("Usuario o contraseña incorrectos");
+    }
+}
+
+/*
 function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -27,11 +43,10 @@ function showGraph() {
     let body = `digraph G { ${matrix.graph()} }`
     $("#graph").attr("src", url + body);
 }*/
-let matrix = new SparseMatrix();
-let avlTree = new AvlTree();
+
+
 function loadStudentsForm(e) {
     e.preventDefault();
-    let avlTree = new AvlTree();
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
     let studentsArray = [];
@@ -64,5 +79,42 @@ function loadStudentsForm(e) {
         console.log(error);
         alert("Error en la inserción");
     }
-
 }
+
+
+function showStudentsForm(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const form = Object.fromEntries(formData);
+    if (avlTree.root !== null) {
+        switch (form.traversal) {
+            case 'inOrder':
+                $('#studentsTable tbody').html(
+                    avlTree.inOrder()
+                )
+                break;
+            case 'preOrder':
+                $('#studentsTable tbody').html(
+                    avlTree.preOrder()
+                )
+                break;
+            case 'postOrder':
+                $('#studentsTable tbody').html(
+                    avlTree.postOrder()
+                )
+                break;
+            default:
+                $('#studentsTable tbody').html("")
+                break;
+        }
+    }
+}
+
+function showAvlGraph() {
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = avlTree.Graph();
+    console.log(body);
+    $("#graph").attr("src", url + body);
+}
+
+$(document).ready(showLocalStudents);

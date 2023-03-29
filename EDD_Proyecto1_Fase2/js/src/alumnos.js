@@ -6,3 +6,4 @@ class estudiante{
         this.carpeta_raiz = carpeta_raiz;
     }
 }
+module.exports = estudiante;

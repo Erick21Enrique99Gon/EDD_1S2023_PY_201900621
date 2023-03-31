@@ -169,7 +169,7 @@ class AvlTree {
         var nodo = this.root;
         while (nodo != null) {
             if (nodo.item.carnet == carnet) {
-                return nodo.ite;
+                return nodo.item;
             } else if (carnet > nodo.item.carnet) {
                 nodo = nodo.right;
             } else {
@@ -180,4 +180,4 @@ class AvlTree {
     }
 }
 
-module.exports = AvlTree;
+//module.exports = AvlTree;

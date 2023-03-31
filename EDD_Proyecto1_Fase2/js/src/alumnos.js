@@ -1,4 +1,4 @@
-class estudiante{
+class Estudiante{
     constructor(carnet, nombre, password, carpeta_raiz){
         this.carnet = carnet;
         this.nombre = nombre;
@@ -6,4 +6,4 @@ class estudiante{
         this.carpeta_raiz = carpeta_raiz;
     }
 }
-module.exports = estudiante;
+//module.exports = estudiante;

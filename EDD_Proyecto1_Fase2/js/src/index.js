@@ -1,6 +1,7 @@
 let avlTree = new AvlTree();
 let matrix = new SparseMatrix();
-
+let estudiante = new Estudiante();
+let Tree = new NaryTree();
 function login(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -11,10 +12,51 @@ function login(e) {
         window.location = "admin.html";
     }
     else {
-        alert("Usuario o contraseña incorrectos");
+        if (localStorage.getItem("avlTree") !== null) {
+            let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+            avlTree.root = temp.root;
+            estudiante = avlTree.search(username);
+            console.log(estudiante);
+            if (estudiante != null) {
+                if (estudiante.password == password && estudiante.carnet == username) {
+                    window.location = "principal.html";
+                }
+                else {
+                    alert("Usuario o Contraseña incorrecta");
+                }
+            }
+        }else{
+        alert("Usuario o Contraseña incorrectos");
+        }
     }
 }
 
+function crearCarpeta(e) {
+    e.preventDefault();
+    let folder = $('#folderName').val();
+    let path = $('#path').val();
+    Tree.insertValue(folder, path);
+    alert("Carpeta creada con exito");
+    $('#espacio_carpetas').html(Tree.getHTML(path));
+}
+
+function entrarCarpeta(folderName) {
+    let path = $('#path').val();
+    let currpath =path == "/"? path + folderName : path + "/" + folderName;
+    $('#path').val(currpath);
+    $('#espacio_carpetas').html(Tree.getHTML(currpath));
+}
+
+function retornarInicio() {
+    $('#path').val("/");
+    $('#espacio_carpetas').html(Tree.getHTML("/"));
+}
+
+function showGraphNaryTree() {
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body =  Tree.Graphviz();
+    $("#graph").attr("src", url + body);
+}
 /*
 function handleSubmit(e) {
     e.preventDefault();
@@ -111,10 +153,12 @@ function showStudentsForm(e) {
 }
 
 function showAvlGraph() {
-    let url = 'https://quickchart.io/graphviz?graph=';
-    let body = avlTree.Graph();
-    console.log(body);
-    $("#graph").attr("src", url + body);
+    if (localStorage.getItem("avlTree") !== null) {
+        let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+        avlTree.root = temp.root;
+        let url = 'https://quickchart.io/graphviz?graph=';
+        let body = avlTree.Graph();
+        console.log(body);
+        $("#graph").attr("src", url + body);
+    }
 }
-
-$(document).ready(showLocalStudents);

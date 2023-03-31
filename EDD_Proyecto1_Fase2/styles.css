@@ -120,3 +120,39 @@ input:focus {
     color: black;
     background-color: #FFC312;
 }
+/* principal */
+.folder :hover {
+    background-color: #FFC312;
+    color: black;
+    color: white;
+}
+.folder {
+    color: white;
+}
+
+.Titulos_Principal {
+    color: white;
+    margin: 0%;
+}
+
+.container_Principal {
+    height: 100%;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 10%;
+}
+
+.card_ingreso_principal {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.card_mostrar_principal {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.card-body_principal h4{
+    color: white;
+}
+.inicio_btn_principal {
+    color: black;
+    background-color: #FFC312;
+    width: 100%;
+}

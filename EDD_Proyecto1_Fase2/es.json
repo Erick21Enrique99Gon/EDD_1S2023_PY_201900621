@@ -1,19 +1,19 @@
 {
     "alumnos": [
         {
-          "carnet": 201700918,
+          "carnet": 170000918,
           "nombre": "Cristian Suy",
           "password": "Cris123",
           "carpeta_raiz": "/"
         },
         {
-          "carnet": 201780044,
+          "carnet": 180080044,
           "nombre": "Leonardo Martinez",
           "password": "leo123",
           "carpeta_raiz": "/"
         },
         {
-          "carnet": 201403877,
+          "carnet": 300003877,
           "nombre": "Ebany Larios",
           "password": "qwerty12",
           "carpeta_raiz": "/"

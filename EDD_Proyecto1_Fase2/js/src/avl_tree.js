@@ -12,7 +12,6 @@ let  connections = ""
 
 class AvlTree {
     constructor() {
-        console.log("AVL Tree");
         this.root = null;
     }
 
@@ -177,6 +176,21 @@ class AvlTree {
             }
         }
         return null;
+    }
+    ActualizarCarpetas(itemActualizado) {
+        var nodo = this.root;
+        while (nodo != null) {
+            if (nodo.item.carnet == itemActualizado.carnet) {
+                nodo.item.nray_tree.root = itemActualizado.nray_tree.root;
+                nodo.item.circular_list.head = itemActualizado.circular_list.head;
+                nodo.item.circular_list.tail = itemActualizado.circular_list.tail;
+                return;
+            } else if (carnet > nodo.item.carnet) {
+                nodo = nodo.right;
+            } else {
+                nodo = nodo.left;
+            }
+        }
     }
 }
 

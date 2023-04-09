@@ -31,17 +31,26 @@ class CircularList {
         console.log(temp.value);
     }
     graph() {
+        let id = 0;
         let temp = this.head;
-        let str = "digraph G {\n";
-        str += "layout=circo\n";
+        let str = "digraph G {rankdir=\"LR\" \n";
         while (temp.next != this.head) {
-            str += temp.value + "->" + temp.next.value + "\n";
+            str += id + "[label=\"" + temp.value + "\"];\n";
+            id++;
             temp = temp.next;
         }
-        str += temp.value + "->" + temp.next.value + "\n";
+        str += id + "[label=\"" + temp.value + "\"];\n";
+        id = 0;
+        temp = this.head;
+        while (temp.next != this.head) {
+            str += id + "->" + (id+1) + ";\n";
+            id++;
+            temp = temp.next;
+        }
+        str += id + "->" + 0 + ";\n";
         str += "}";
         console.log(str);
         return str;
     }
 }
-module.exports = CircularList;
+//module.exports = CircularList;

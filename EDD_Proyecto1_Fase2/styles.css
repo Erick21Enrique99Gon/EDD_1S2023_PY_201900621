@@ -156,3 +156,7 @@ input:focus {
     background-color: #FFC312;
     width: 100%;
 }
+
+.carnet {
+    color: white;
+}

@@ -1,8 +1,11 @@
 let avlTree = new AvlTree();
 let matrix = new SparseMatrix();
 let estudiante = new Estudiante();
+let estudiant = new Estudiante();
 let Tree = new NaryTree();
-function login(e) {
+let listaCircular = new CircularList();
+
+async function login(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
@@ -16,10 +19,13 @@ function login(e) {
             let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
             avlTree.root = temp.root;
             estudiante = avlTree.search(username);
-            console.log(estudiante);
+            localStorage.setItem("estudiante", JSON.stringify(JSON.decycle(estudiante)));
             if (estudiante != null) {
                 if (estudiante.password == password && estudiante.carnet == username) {
                     window.location = "principal.html";
+                    Tree.root = estudiante.nray_tree.root;
+                    Tree.size = estudiante.nray_tree.size;
+                    $('#espacio_carpetas').html(Tree.getHTML(path));
                 }
                 else {
                     alert("Usuario o Contraseña incorrecta");
@@ -35,28 +41,143 @@ function crearCarpeta(e) {
     e.preventDefault();
     let folder = $('#folderName').val();
     let path = $('#path').val();
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    Tree.root = estudiante.nray_tree.root;
+    Tree.size = estudiante.nray_tree.size;
     Tree.insertValue(folder, path);
-    alert("Carpeta creada con exito");
+    let actividad = `Accion: Se creo carpeta\n\\"${folder}\\"\nFecha y Hora: ${ new Date().toLocaleString()}`;
+    listaCircular.head = estudiante.circular_list.head;
+    listaCircular.tail = estudiante.circular_list.tail;
+    listaCircular.insertar(actividad);
+    estudiante.circular_list.head = listaCircular.head;
+    estudiante.circular_list.tail = listaCircular.tail;
+    estudiante.nray_tree.root = Tree.root;
+    estudiante.nray_tree.size = Tree.size;
     $('#espacio_carpetas').html(Tree.getHTML(path));
+    let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+    avlTree.root = temp.root;
+    avlTree.ActualizarCarpetas(estudiante);
+    localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("estudiante", JSON.stringify(JSON.decycle(estudiante)));
+}
+
+function eliminarCarpeta(e) {
+    e.preventDefault();
+    let folder = $('#folderNameEliminacion').val();
+    let path = $('#path').val();
+    let currpath = path == "/" ? path + folder : path + "/" + folder;
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    Tree.root = estudiante.nray_tree.root;
+    Tree.size = estudiante.nray_tree.size;
+    Tree.deleteFolder(currpath);
+    let actividad = `Accion: Se elimino carpeta\n\\"${folder}\\"\nFecha y Hora: ${new Date().toLocaleString()}`;
+    listaCircular.head = estudiante.circular_list.head;
+    listaCircular.tail = estudiante.circular_list.tail;
+    listaCircular.insertar(actividad);
+    estudiante.circular_list.head = listaCircular.head;
+    estudiante.circular_list.tail = listaCircular.tail;
+    estudiante.nray_tree.root = Tree.root;
+    estudiante.nray_tree.size = Tree.size;
+    $('#espacio_carpetas').html(Tree.getHTML(path));
+    let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+    avlTree.root = temp.root;
+    avlTree.ActualizarCarpetas(estudiante);
+    localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("estudiante", JSON.stringify(JSON.decycle(estudiante)));
 }
 
 function entrarCarpeta(folderName) {
     let path = $('#path').val();
     let currpath =path == "/"? path + folderName : path + "/" + folderName;
     $('#path').val(currpath);
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    Tree.root = estudiante.nray_tree.root;
     $('#espacio_carpetas').html(Tree.getHTML(currpath));
 }
 
 function retornarInicio() {
     $('#path').val("/");
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    Tree.root = estudiante.nray_tree.root;
     $('#espacio_carpetas').html(Tree.getHTML("/"));
 }
 
 function showGraphNaryTree() {
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    Tree.root = estudiante.nray_tree.root;
     let url = 'https://quickchart.io/graphviz?graph=';
-    let body =  Tree.Graphviz();
+    let body = Tree.Graphviz();
+    console.log(body);
     $("#graph").attr("src", url + body);
 }
+
+function showGraphCircular() {
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    listaCircular.head = estudiante.circular_list.head;
+    listaCircular.tail = estudiante.circular_list.tail;
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = listaCircular.graph();
+    $("#graph").attr("src", url + body);
+}
+
+const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
+const subirArchivo = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const form = Object.fromEntries(formData);
+    let path = $('#path').val();
+    if(form.file.type == 'text/plain'){
+        let fr = new FileReader();
+        fr.readAsText(form.file);
+        fr.onload = () => {
+            Tree.getFolder(path).files.push({
+                name: form.fileName,
+                content: fr.result,
+                type: form.file.type
+            })
+            $('#espacio_carpetas').html(Tree.getHTML(path));
+        }
+    }else{
+        let parseBase64 = await toBase64(form.file);
+        Tree.getFolder(path).files.push({
+            name: form.fileName,
+            content: parseBase64,
+            type: form.file.type
+        })
+        $('#espacio_carpetas').html(Tree.getHTML(path));
+    }
+}
+
+function eliminarArchivo(event){
+    const formData = new FormData(e.target);
+    const form = Object.fromEntries(formData);
+    let path = $('#path').val();
+    let fileName = form.fileName;
+    Tree.deleteFile(path, fileName);
+    $('#espacio_carpetas').html(Tree.getHTML(path));
+}
+
+/*function showCarpetas(){
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    Tree.root = estudiante.nray_tree.root;
+    $('#espacio_carpetas').html(Tree.getHTML("/"));
+}
+$(document).ready(showCarpetas);*/
+
+function showLocalStudents() {
+    estudiante = JSON.parse(localStorage.getItem("estudiante"));
+    $('#carnet h3').html(
+       estudiante.carnet
+    )
+}
+
+$(document).ready(showLocalStudents);
 /*
 function handleSubmit(e) {
     e.preventDefault();
@@ -92,6 +213,10 @@ function loadStudentsForm(e) {
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
     let studentsArray = [];
+    if (localStorage.getItem("avlTree") !== null) {
+        let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+        avlTree.root = temp.root;
+    }
     try {
         let fr = new FileReader();
         fr.readAsText(form.inputFile);
@@ -110,11 +235,13 @@ function loadStudentsForm(e) {
                     `);
                 }).join('')
             )
+
             for (let i = 0; i < studentsArray.length; i++) {
-                avlTree.insertValue(studentsArray[i]);
+                let estudianteIngresando = new Estudiante(studentsArray[i].carnet, studentsArray[i].nombre, studentsArray[i].password, studentsArray[i].carpeta_raiz);
+                avlTree.insertValue(estudianteIngresando);
             }
             // GUARDAR EN LOCAL STORAGE
-            localStorage.setItem("avlTree", JSON.stringify(avlTree))
+            localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
             alert('Alumnos cargados con éxito!')
         }
     } catch (error) {
@@ -128,6 +255,9 @@ function showStudentsForm(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
+    let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+    avlTree.root = temp.root;
+    console.log(avlTree);
     if (avlTree.root !== null) {
         switch (form.traversal) {
             case 'inOrder':

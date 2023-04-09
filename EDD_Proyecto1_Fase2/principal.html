@@ -45,6 +45,9 @@
                 <div class="col-4 card_ingreso_principal">
                     <div class="card-header">
                         <h3>Bienvenido</h3>
+                        <div class="carnet" id="carnet">
+                            <h3></h3>
+                        </div>
                     </div>
                     <div class="card-body">
                         <form class="form" onsubmit="crearCarpeta(event)">
@@ -57,20 +60,51 @@
                                     Carpeta</button>
                             </div>
                         </form>
-                        <form action="">
+                        <form class="form" onsubmit="eliminarCarpeta(event)">
+                            <div class="input-group form-group">
+                                <input type="text" id="folderNameEliminacion" name="folderNameEliminacion" class="form-control" placeholder="Nombre de Carpeta">
+                            </div>
                             <div class="input-group form-group">
                                 <input type="submit" value="Eliminar Carpeta"
                                     class="btn float-right ingresar_estudiantes_btn_admin">
                             </div>
                         </form>
-                        <form action="">
+                        <div class="card-header">
+                            <h3>Subir Archibo</h3>
+                        </div>
+                        <form class="form" onsubmit="subirArchivo(event)">
                             <div class="input-group form-group">
-                                <input type="file" id="inputFile" name="inputFile" class="form-control">
+                                <input type="text" id="fileName" name="fileName" class="form-control" placeholder="Nombre de Carpeta">
+                            </div>
+                            <div class="input-group form-group">
+                                <input type="file" id="file" name="file" class="form-control" accept="application/pdf, .txt, image/*">
+                            </div>
+                            <div class="input-group form-group">
+                                <button type="submit" class="btn float-right ingresar_estudiantes_btn_admin">Subir</button>
                             </div>
                         </form>
+                        <div class="card-header">
+                            <h3>Eliminar Archibo</h3>
+                        </div>
+                        <form class="form" onsubmit="eliminarArchivo(event)">
+                            <div class="input-group form-group">
+                                <input type="text" id="fileName" name="fileName" class="form-control" placeholder="Nombre de Carpeta">
+                            </div>
+                            <div class="input-group form-group">
+                                <button type="submit" class="btn float-right ingresar_estudiantes_btn_admin">Borrar</button>
+                            </div>
+                        </form>
+
+                        <div class="card-header">
+                            <h3>Reportes</h3>
+                        </div>
                             <div class="input-group form-group">
                                 <a onclick="showGraphNaryTree()"
                                     class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Carpetas</a>
+                            </div>
+                            <div class="input-group form-group">
+                                <a onclick="showGraphCircular()"
+                                    class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Bitacora</a>
                             </div>
                             <div class="input-group form-group">
                                 <a
@@ -110,15 +144,22 @@
         <!-- "Librerias" -->
         <script src="./js/src/lib/cycle.js"></script>
         <!-- Importacion de archivos -->
-        <script src="./js/src/sparase_matrix.js"></script>
-        <script src="./js/src/avl_tree.js"></script>
-        <script src="./js/src/alumnos.js"></script>
-        <script src="./js/src/n_tree.js"></script>
-        <script src="./js/src/index.js"></script>
+        <script type="text/javascript" src="./js/src/sparase_matrix.js"></script>
+        <script type="text/javascript" src="./js/src/circular.js"></script>
+        <script type="text/javascript" src="./js/src/avl_tree.js"></script>
+        <script type="text/javascript" src="./js/src/n_tree.js"></script>
+        <script type="text/javascript" src="./js/src/alumnos.js"></script>
+        <script type="text/javascript" src="./js/src/index.js"></script>
         <!-- Query -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
+        <script>
+            showLocalStudents();
+        </script>
+        <!-- <script>
+            showCarpetas();
+        </script> -->
     </body>
 
     </html>

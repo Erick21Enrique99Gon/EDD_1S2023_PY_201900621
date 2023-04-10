@@ -132,6 +132,9 @@ const subirArchivo = async (e) => {
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
     let path = $('#path').val();
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    Tree.root = estudiante.nray_tree.root;
+    Tree.size = estudiante.nray_tree.size;
     if(form.file.type == 'text/plain'){
         let fr = new FileReader();
         fr.readAsText(form.file);
@@ -152,15 +155,45 @@ const subirArchivo = async (e) => {
         })
         $('#espacio_carpetas').html(Tree.getHTML(path));
     }
+    estudiante.nray_tree.root = Tree.root;
+    estudiante.nray_tree.size = Tree.size;
+    let actividad = `Accion: Se creo archivo\n\\"${form.fileName}\\"\nFecha y Hora: ${new Date().toLocaleString()}`;
+    listaCircular.head = estudiante.circular_list.head;
+    listaCircular.tail = estudiante.circular_list.tail;
+    listaCircular.insertar(actividad);
+    estudiante.circular_list.head = listaCircular.head;
+    estudiante.circular_list.tail = listaCircular.tail;
+    let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+    avlTree.root = temp.root;
+    avlTree.ActualizarCarpetas(estudiante);
+    localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("estudiante", JSON.stringify(JSON.decycle(estudiante)));
 }
 
-function eliminarArchivo(event){
+function eliminarArchivo(e){
+    e.preventDefault();
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
     let path = $('#path').val();
     let fileName = form.fileName;
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    Tree.root = estudiante.nray_tree.root;
+    Tree.size = estudiante.nray_tree.size;
     Tree.deleteFile(path, fileName);
     $('#espacio_carpetas').html(Tree.getHTML(path));
+    estudiante.nray_tree.root = Tree.root;
+    estudiante.nray_tree.size = Tree.size;
+    let actividad = `Accion: Se elimino archivo\n\\"${form.fileName}\\"\nFecha y Hora: ${new Date().toLocaleString()}`;
+    listaCircular.head = estudiante.circular_list.head;
+    listaCircular.tail = estudiante.circular_list.tail;
+    listaCircular.insertar(actividad);
+    estudiante.circular_list.head = listaCircular.head;
+    estudiante.circular_list.tail = listaCircular.tail;
+    let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+    avlTree.root = temp.root;
+    avlTree.ActualizarCarpetas(estudiante);
+    localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("estudiante", JSON.stringify(JSON.decycle(estudiante)));
 }
 
 /*function showCarpetas(){

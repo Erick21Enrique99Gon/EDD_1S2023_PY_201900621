@@ -1,7 +1,6 @@
 let avlTree = new AvlTree();
 let matrix = new SparseMatrix();
 let estudiante = new Estudiante();
-let estudiant = new Estudiante();
 let Tree = new NaryTree();
 let listaCircular = new CircularList();
 
@@ -44,13 +43,15 @@ function crearCarpeta(e) {
     estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
     Tree.root = estudiante.nray_tree.root;
     Tree.size = estudiante.nray_tree.size;
-    Tree.insertValue(folder, path);
+    folder = Tree.insertValue(folder, path);
+    
     let actividad = `Accion: Se creo carpeta\n\\"${folder}\\"\nFecha y Hora: ${ new Date().toLocaleString()}`;
     listaCircular.head = estudiante.circular_list.head;
     listaCircular.tail = estudiante.circular_list.tail;
     listaCircular.insertar(actividad);
     estudiante.circular_list.head = listaCircular.head;
     estudiante.circular_list.tail = listaCircular.tail;
+    
     estudiante.nray_tree.root = Tree.root;
     estudiante.nray_tree.size = Tree.size;
     $('#espacio_carpetas').html(Tree.getHTML(path));
@@ -107,7 +108,6 @@ function showGraphNaryTree() {
     Tree.root = estudiante.nray_tree.root;
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = Tree.Graphviz();
-    console.log(body);
     $("#graph").attr("src", url + body);
 }
 
@@ -117,6 +117,18 @@ function showGraphCircular() {
     listaCircular.tail = estudiante.circular_list.tail;
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = listaCircular.graph();
+    $("#graph").attr("src", url + body);
+}
+
+function showGraphSparse() {
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    Tree.root = estudiante.nray_tree.root;
+    let path = $('#path').val();
+    matrix.head = Tree.getFolder(path).matrix.head;
+    console.log(matrix);
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = `digraph G { ${matrix.graph()} }`;
+    matrix.printy();
     $("#graph").attr("src", url + body);
 }
 
@@ -135,12 +147,19 @@ const subirArchivo = async (e) => {
     estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
     Tree.root = estudiante.nray_tree.root;
     Tree.size = estudiante.nray_tree.size;
+    matrix.head = Tree.getFolder(path).matrix.head;
+    console.log(matrix);
+    console.log(form.fileName);
+    let nameM = Tree.modifyFile(Tree.getFolder(path), form.fileName,0);
+    console.log(Tree.getFolder(path));
+    matrix.insertaCarnet(estudiante.carnet);
     if(form.file.type == 'text/plain'){
         let fr = new FileReader();
+        matrix.insertaArchivo(fr.result, form.file.type, nameM);
         fr.readAsText(form.file);
         fr.onload = () => {
             Tree.getFolder(path).files.push({
-                name: form.fileName,
+                name: nameM,
                 content: fr.result,
                 type: form.file.type
             })
@@ -148,13 +167,16 @@ const subirArchivo = async (e) => {
         }
     }else{
         let parseBase64 = await toBase64(form.file);
+        matrix.insertaArchivo(parseBase64, form.file.type, nameM);
         Tree.getFolder(path).files.push({
-            name: form.fileName,
+            name: nameM,
             content: parseBase64,
             type: form.file.type
         })
         $('#espacio_carpetas').html(Tree.getHTML(path));
     }
+    matrix.insertar(estudiante.carnet, nameM, "r-w");
+    Tree.getFolder(path).matrix.head = matrix.head;
     estudiante.nray_tree.root = Tree.root;
     estudiante.nray_tree.size = Tree.size;
     let actividad = `Accion: Se creo archivo\n\\"${form.fileName}\\"\nFecha y Hora: ${new Date().toLocaleString()}`;

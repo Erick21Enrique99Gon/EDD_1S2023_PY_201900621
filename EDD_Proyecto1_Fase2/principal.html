@@ -62,7 +62,8 @@
                         </form>
                         <form class="form" onsubmit="eliminarCarpeta(event)">
                             <div class="input-group form-group">
-                                <input type="text" id="folderNameEliminacion" name="folderNameEliminacion" class="form-control" placeholder="Nombre de Carpeta">
+                                <input type="text" id="folderNameEliminacion" name="folderNameEliminacion"
+                                    class="form-control" placeholder="Nombre de Carpeta">
                             </div>
                             <div class="input-group form-group">
                                 <input type="submit" value="Eliminar Carpeta"
@@ -74,13 +75,16 @@
                         </div>
                         <form class="form" onsubmit="subirArchivo(event)">
                             <div class="input-group form-group">
-                                <input type="text" id="fileName" name="fileName" class="form-control" placeholder="Nombre de Carpeta">
+                                <input type="text" id="fileName" name="fileName" class="form-control"
+                                    placeholder="Nombre de Carpeta">
                             </div>
                             <div class="input-group form-group">
-                                <input type="file" id="file" name="file" class="form-control" accept="application/pdf, .txt, image/*">
+                                <input type="file" id="file" name="file" class="form-control"
+                                    accept="application/pdf, .txt, image/*">
                             </div>
                             <div class="input-group form-group">
-                                <button type="submit" class="btn float-right ingresar_estudiantes_btn_admin">Subir</button>
+                                <button type="submit"
+                                    class="btn float-right ingresar_estudiantes_btn_admin">Subir</button>
                             </div>
                         </form>
                         <div class="card-header">
@@ -88,28 +92,30 @@
                         </div>
                         <form class="form" onsubmit="eliminarArchivo(event)">
                             <div class="input-group form-group">
-                                <input type="text" id="fileName" name="fileName" class="form-control" placeholder="Nombre de Carpeta">
+                                <input type="text" id="fileName" name="fileName" class="form-control"
+                                    placeholder="Nombre de Carpeta">
                             </div>
                             <div class="input-group form-group">
-                                <button type="submit" class="btn float-right ingresar_estudiantes_btn_admin">Borrar</button>
+                                <button type="submit"
+                                    class="btn float-right ingresar_estudiantes_btn_admin">Borrar</button>
                             </div>
                         </form>
 
                         <div class="card-header">
                             <h3>Reportes</h3>
                         </div>
-                            <div class="input-group form-group">
-                                <a onclick="showGraphNaryTree()"
-                                    class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Carpetas</a>
-                            </div>
-                            <div class="input-group form-group">
-                                <a onclick="showGraphCircular()"
-                                    class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Bitacora</a>
-                            </div>
-                            <div class="input-group form-group">
-                                <a onclick="showGraphSparse()"
-                                    class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Archivos</a>
-                            </div>
+                        <div class="input-group form-group">
+                            <a onclick="showGraphNaryTree()"
+                                class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Carpetas</a>
+                        </div>
+                        <div class="input-group form-group">
+                            <a onclick="showGraphCircular()"
+                                class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Bitacora</a>
+                        </div>
+                        <div class="input-group form-group">
+                            <a onclick="showGraphSparse()"
+                                class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Archivos</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-8 card_mostrar_principal">
@@ -134,6 +140,38 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-4 card_mostrar_principal">
+                    <div class="card-header">
+                        <h3>Permisos</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="form" onsubmit="DARPForm(event)">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="input-group form-group">
+                                        <select id="traversalCarnets" name="traversalCarnets" class="form-select">
+                                        </select>
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <select id="traversalArchivos" name="traversalArchivos" class="form-select">
+                                        </select>
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <select id="traversalPermisos" name="traversalPermisos" class="form-select">
+                                            <option selected disabled>Seleccionar Permisos</option>
+                                            <option value="r-w">r-w</option>
+                                            <option value="r">r</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <button type="submit"
+                                            class="btn float-right mostrar_estudiantes_btn_admin">Dar permisos</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="Titulos_admin">
                 <h1>Reportes</h1>
@@ -156,6 +194,12 @@
             crossorigin="anonymous"></script>
         <script>
             showLocalStudents();
+        </script>
+        <script>
+            showCarnets();
+        </script>
+        <script>
+            showArchivos();
         </script>
         <!-- <script>
             showCarpetas();

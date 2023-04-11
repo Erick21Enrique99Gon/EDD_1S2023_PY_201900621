@@ -218,12 +218,64 @@ function eliminarArchivo(e){
     localStorage.setItem("estudiante", JSON.stringify(JSON.decycle(estudiante)));
 }
 
+function DARPForm(e){
+    e.preventDefault();
+    let path = $('#path').val();
+    const formData = new FormData(e.target);
+    const form = Object.fromEntries(formData);
+    estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
+    Tree.root = estudiante.nray_tree.root;
+    Tree.size = estudiante.nray_tree.size;
+    console.log(Tree.getFolder(path));
+    matrix.head = Tree.getFolder(path).matrix.head;
+    matrix.insertaCarnet(form.traversalCarnets);
+    matrix.insertar(form.traversalCarnets, form.traversalArchivos, form.traversalPermisos);
+    Tree.getFolder(path).matrix.head = matrix.head;
+    estudiante.nray_tree.root = Tree.root;
+    estudiante.nray_tree.size = Tree.size;
+    let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+    avlTree.root = temp.root;
+    avlTree.ActualizarCarpetas(estudiante);
+    localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("estudiante", JSON.stringify(JSON.decycle(estudiante)));
+}
+
 /*function showCarpetas(){
     estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
     Tree.root = estudiante.nray_tree.root;
     $('#espacio_carpetas').html(Tree.getHTML("/"));
 }
 $(document).ready(showCarpetas);*/
+
+function showCarnets() {
+    let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+    avlTree.root = temp.root;
+    $('#traversalCarnets').html(
+        avlTree.inOrderSeleccion()
+    )
+}
+
+$(document).ready(showCarnets);
+
+function showArchivos() {
+    estudiante = JSON.parse(localStorage.getItem("estudiante"));
+    let path = $('#path').val();
+    Tree.root = estudiante.nray_tree.root;
+    Tree.size = estudiante.nray_tree.size;
+    let archivos = Tree.getFolder(path).files;
+    let html = "    <option selected disabled>Seleccionar archivo</option>";
+    archivos.forEach(archivo => {
+        html += `
+        <option value="${archivo.name}">${archivo.name}</option>
+        ` 
+    });
+
+    $('#traversalArchivos').html(
+        html
+    )
+}
+
+$(document).ready(showArchivos);
 
 function showLocalStudents() {
     estudiante = JSON.parse(localStorage.getItem("estudiante"));

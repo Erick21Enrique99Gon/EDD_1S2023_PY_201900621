@@ -98,6 +98,24 @@ class AvlTree {
             }
         }
     }
+    inOrderSeleccion() {
+        let html = "    <option selected disabled>Seleccionar Carnet</option>";
+        html += this.#inOrderRecursiveSeleccion(this.root);
+        return html;
+    }
+    #inOrderRecursiveSeleccion(current) {
+        let row = "";
+        if (current.left != null) {
+            row += this.#inOrderRecursiveSeleccion(current.left);
+        }
+        row += `
+             <option value="${current.item.carnet}">${current.item.carnet}</option>
+        `;
+        if (current.right != null) {
+            row += this.#inOrderRecursiveSeleccion(current.right);
+        }
+        return row;
+    }
     inOrder() {
         let html = this.#inOrderRecursive(this.root);
         return html;

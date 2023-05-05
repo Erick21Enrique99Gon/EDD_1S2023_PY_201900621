@@ -1,0 +1,184 @@
+/* Made with love by Mutiullah Samim*/
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,
+
+body {
+    background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+    background-size: cover;
+    background-repeat: repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+}
+
+.container {
+    height: 100%;
+}
+
+.card {
+    height: 300px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.cardGrafica {
+    height: 50%;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 75%;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.grafica {
+    height: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.card-header h3 {
+    color: white;
+}
+
+.col-6 h5 {
+    color: white;
+}
+.TEXTO_INGRESO_MATRIZ h5 {
+    color: white;
+}
+.input-group-prepend span {
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border: 0 !important;
+}
+
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+    
+}
+
+.administrador {
+    color: white;
+}
+
+.administrador input {
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.ingresar_btn {
+    color: black;
+    background-color: #FFC312;
+    width: 100px;
+}
+
+.ingresar_btn:hover {
+    color: black;
+    background-color: white;
+}
+.generar_btn {
+    color: black;
+    background-color: #FFC312;
+    width: 100px;
+}
+
+.generar_btn:hover {
+    color: black;
+    background-color: white;
+}
+/* administrador */
+.Titulos_admin{
+    color: white;
+}
+
+.card_ingreso_admin {
+    height: 300px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.card-log {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.card-log h3{
+    color: white;
+}
+.card-log th{
+    color: white;
+}
+.card-log td{
+    color: white;
+}
+.card_mostrar_admin {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.ingresar_estudiantes_btn_admin {
+    color: black;
+    background-color: #FFC312;
+    width: 100%;
+}
+.mostrar_estudiantes_btn_admin {
+    color: black;
+    background-color: #FFC312;
+}
+/* principal */
+.folder :hover {
+    background-color: #FFC312;
+    color: black;
+    color: white;
+}
+.folder {
+    color: white;
+}
+
+.Titulos_Principal {
+    color: white;
+    margin: 0%;
+}
+
+.container_Principal {
+    height: 100%;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 10%;
+}
+
+.card_ingreso_principal {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.card_mostrar_principal {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.card-body_principal h4{
+    color: white;
+}
+.inicio_btn_principal {
+    color: black;
+    background-color: #FFC312;
+    width: 100%;
+}
+
+.carnet {
+    color: white;
+}
+
+/* administrador */
+.card-chat h4 {
+        color: white;
+}
+.container-chat h5 {
+    color: white;
+}

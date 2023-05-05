@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoDrive</title>
+</head>
+
+<body>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>Administrador</title>
+        <!--Made with love by Mutiullah Samim -->
+
+        <!--Bootsrap 4 CDN-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <!--Fontawesome CDN-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+            integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+        <!--Custom styles-->
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+
+    <body>
+        <div class="container_Principal">
+            <div class="Titulos_Principal">
+                <h1>EDD GoDrive</h1>
+                <hr>
+            </div>
+            <div class="d-flex ">
+                <div class="col-4 card_ingreso_principal">
+                    <div class="card-header">
+                        <h3>Bienvenido</h3>
+                        <div class="carnet" id="carnet">
+                            <h3></h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form class="form" onsubmit="crearCarpeta(event)">
+                            <div class="input-group form-group">
+                                <input type="text" id="folderName" name="folderName" class="form-control"
+                                    placeholder="Nombre de Carpeta">
+                            </div>
+                            <div class="input-group form-group">
+                                <button type="submit" class="btn float-right ingresar_estudiantes_btn_admin">Crear
+                                    Carpeta</button>
+                            </div>
+                        </form>
+                        <form class="form" onsubmit="eliminarCarpeta(event)">
+                            <div class="input-group form-group">
+                                <input type="text" id="folderNameEliminacion" name="folderNameEliminacion"
+                                    class="form-control" placeholder="Nombre de Carpeta">
+                            </div>
+                            <div class="input-group form-group">
+                                <input type="submit" value="Eliminar Carpeta"
+                                    class="btn float-right ingresar_estudiantes_btn_admin">
+                            </div>
+                        </form>
+                        <div class="card-header">
+                            <h3>Subir Archibo</h3>
+                        </div>
+                        <form class="form" onsubmit="subirArchivo(event)">
+                            <div class="input-group form-group">
+                                <input type="text" id="fileName" name="fileName" class="form-control"
+                                    placeholder="Nombre de Carpeta">
+                            </div>
+                            <div class="input-group form-group">
+                                <input type="file" id="file" name="file" class="form-control"
+                                    accept="application/pdf, .txt, image/*">
+                            </div>
+                            <div class="input-group form-group">
+                                <button type="submit"
+                                    class="btn float-right ingresar_estudiantes_btn_admin">Subir</button>
+                            </div>
+                        </form>
+                        <div class="card-header">
+                            <h3>Eliminar Archibo</h3>
+                        </div>
+                        <form class="form" onsubmit="eliminarArchivo(event)">
+                            <div class="input-group form-group">
+                                <input type="text" id="fileName" name="fileName" class="form-control"
+                                    placeholder="Nombre de Carpeta">
+                            </div>
+                            <div class="input-group form-group">
+                                <button type="submit"
+                                    class="btn float-right ingresar_estudiantes_btn_admin">Borrar</button>
+                            </div>
+                        </form>
+
+                        <div class="card-header">
+                            <h3>Reportes</h3>
+                        </div>
+                        <div class="input-group form-group">
+                            <a onclick="showGraphNaryTree()"
+                                class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Carpetas</a>
+                        </div>
+                        <div class="input-group form-group">
+                            <a onclick="showGraphCircular()"
+                                class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Bitacora</a>
+                        </div>
+                        <div class="input-group form-group">
+                            <a onclick="showGraphSparse()"
+                                class="btn float-right ingresar_estudiantes_btn_admin ">Reporte Archivos</a>
+                        </div>
+                        <div class="input-group form-group">
+                            <a onclick="chat()" class="btn float-right ingresar_estudiantes_btn_admin ">chat</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 card_mostrar_principal">
+                    <div class="card-header">
+                        <h3>Carpetas</h3>
+                    </div>
+                    <div class="card-body_principal">
+                        <div class="row">
+                            <div class="col-3">
+                                <h4>Ruta Altual:</h4>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" id="path" name="path" class="form-control" disabled value="/">
+                            </div>
+                            <div class="col-3">
+                                <button type="button" onclick="retornarInicio()"
+                                    class="btn float-left inicio_btn_principal">Inicio</button>
+                            </div>
+                        </div>
+                        <div class="row mt-6" id="espacio_carpetas">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 card_mostrar_principal">
+                    <div class="card-header">
+                        <h3>Permisos</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="form" onsubmit="DARPForm(event)">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="input-group form-group">
+                                        <select id="traversalCarnets" name="traversalCarnets" class="form-select">
+                                        </select>
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <select id="traversalArchivos" name="traversalArchivos" class="form-select">
+                                        </select>
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <select id="traversalPermisos" name="traversalPermisos" class="form-select">
+                                            <option selected disabled>Seleccionar Permisos</option>
+                                            <option value="r-w">r-w</option>
+                                            <option value="r">r</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <button type="submit"
+                                            class="btn float-right mostrar_estudiantes_btn_admin">Dar permisos</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="Titulos_admin">
+                <h1>Reportes</h1>
+                <hr>
+                <img id="graph">
+            </div>
+        </div>
+        <!-- "Librerias" -->
+        <script src="./js/src/lib/cycle.js"></script>
+        <!-- Importacion de archivos -->
+        <script type="text/javascript" src="./js/src/block-chain.js"></script>
+        <script type="text/javascript" src="./js/src/hash-table.js"></script>
+        <script type="text/javascript" src="./js/src/sparase_matrix.js"></script>
+        <script type="text/javascript" src="./js/src/circular.js"></script>
+        <script type="text/javascript" src="./js/src/avl_tree.js"></script>
+        <script type="text/javascript" src="./js/src/n_tree.js"></script>
+        <script type="text/javascript" src="./js/src/alumnos.js"></script>
+        <script type="text/javascript" src="./js/src/index.js"></script>
+        <!-- Query -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script>
+            showLocalStudents();
+        </script>
+        <script>
+            showCarnets();
+        </script>
+        <script>
+            showArchivos();
+        </script>
+        <!-- <script>
+            showCarpetas();
+        </script> -->
+    </body>
+
+    </html>
+</body>
+
+</html>

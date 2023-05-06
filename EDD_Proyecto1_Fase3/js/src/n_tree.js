@@ -1,22 +1,23 @@
 class NNode {
-    constructor(folderName) {
+    constructor(folderName,weight) {
         this.folderName = folderName;
         this.chidren = [];
         this.files = [];
         this.id = null;
         this.matrix = new SparseMatrix();
+        this.weight = weight;
     }
 }
 class NaryTree {
     constructor() {
-        this.root = new NNode('/');
+        this.root = new NNode('/',1);
         this.root.id = 0;
         this.size = 1;
     }
 
     insertValue(folderName, folderfather) {
-        let newNodo = new NNode(folderName);
-        let father = this.getFolder(folderfather);
+        let { node: father, weight } = this.getFolder(folderfather);
+        let newNodo = new NNode(folderName, weight);
         if (father == null) {
             console.log("No se encontro el padre");
         } else {
@@ -61,8 +62,9 @@ class NaryTree {
     }
 
     getFolder(path) {
+        let weight = 2;
         if (path == this.root.folderName) {
-            return this.root;
+            return { node: this.root, weight: weight };
         } else {
             let temp = this.root;
             let folders = path.split('/');
@@ -75,8 +77,9 @@ class NaryTree {
                     return null;
                 }
                 temp = folder;
+                weight++;
             }
-            return temp
+            return { node: temp, weight: weight }; 
         }
     }
 
@@ -127,14 +130,18 @@ class NaryTree {
             temp = queue.shift();
             nodes += temp.id + "[label=\"" + temp.folderName + "\"];\n";
             temp.chidren.forEach(child => {
-                connections += temp.id + "->" + child.id + ";\n";
+                if (temp.folderName == "/") {
+                    connections += temp.id + "->" + child.id + "[label = " + 1 + "] ;\n";
+                }else{
+                    connections += temp.id + "->" + child.id + "[label = " + temp.weight + "] ;\n";
+                }
                 queue.push(child);
             });
         }
-        return "digraph G {\n node[shape=\"record\"];\n" + nodes + connections + "}";
+        return "digraph G {sep=\" + 1, 3\"; \noverlap=scalexy;\nlayout=neato; \nedge[dir=none];\n node[shape=\"record\"];\n" + nodes + connections + "}";
     }
     getHTML(path) {
-        let node = this.getFolder(path);
+        let { node } = this.getFolder(path);
         let code = "";
         node.chidren.map(child => {
             code += ` <div class="col-2 folder" onclick="entrarCarpeta('${child.folderName}')">

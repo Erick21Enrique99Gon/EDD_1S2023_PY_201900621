@@ -2,7 +2,7 @@
 class Block{
     constructor(index, transmitter, receiver, message, previusHash, hash){
         this.index = index;
-        this.timestamp = new Date();
+        this.timestamp = new Date(); // FECHA DE CREACIÓN
         this.transmitter = transmitter;
         this.receiver = receiver;
         this.message = message;
@@ -128,7 +128,7 @@ class BlockChain{
         let str = "digraph G {rankdir=\"TB\" \n";
         str += "node[shape = box ]";
         while (temp.next != null) {
-            str += id + "[label=\"" + "timestamp=" + temp.getFormatDate() + "\\n"
+            str += id + "[label=\"" + "timestamp=" + temp.timestamp + "\\n"
                 + "Emisor:" + temp.transmitter + "\\n"
                 + "Receptor:" + temp.receiver + "\\n"
                 + "Previoushash:" + temp.previusHash
@@ -136,7 +136,7 @@ class BlockChain{
             id++;
             temp = temp.next;
         }
-        str += id + "[label=\"" + "timestamp=" + temp.getFormatDate() + "\\n"
+        str += id + "[label=\"" + "timestamp=" + temp.timestamp + "\\n"
             + "Emisor:" + temp.transmitter + "\\n"
             + "Receptor:" + temp.receiver + "\\n"
             + "Previoushash:" + temp.previusHash

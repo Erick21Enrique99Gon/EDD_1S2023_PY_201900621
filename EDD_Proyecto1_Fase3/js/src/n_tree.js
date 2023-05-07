@@ -150,7 +150,6 @@ class NaryTree {
                     </div>`
         })
         node.files.map(file => {
-            console.log(file.type);
             if (file.type === 'text/plain') {
                 let archivo = new Blob([file.content], { type: file.type + "; charset = utf - 8" });
                 console.log(archivo);

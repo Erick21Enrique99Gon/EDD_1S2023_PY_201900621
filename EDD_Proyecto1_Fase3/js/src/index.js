@@ -5,6 +5,7 @@ let Tree = new NaryTree();
 let listaCircular = new CircularList();
 let hashtable = new HashTable();
 let blockChain = new BlockChain();
+let arreglo = [];
 async function login(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -31,8 +32,8 @@ async function login(e) {
                     alert("Usuario o Contraseña incorrecta");
                 }
             }
-        }else{
-        alert("Usuario o Contraseña incorrectos");
+        } else {
+            alert("Usuario o Contraseña incorrectos");
         }
     }
 }
@@ -49,14 +50,14 @@ function crearCarpeta(e) {
     Tree.root = estudiante.nray_tree.root;
     Tree.size = estudiante.nray_tree.size;
     folder = Tree.insertValue(folder, path);
-    
-    let actividad = `Accion: Se creo carpeta\n\\"${folder}\\"\nFecha y Hora: ${ new Date().toLocaleString()}`;
+
+    let actividad = `Accion: Se creo carpeta\n\\"${folder}\\"\nFecha y Hora: ${new Date().toLocaleString()}`;
     listaCircular.head = estudiante.circular_list.head;
     listaCircular.tail = estudiante.circular_list.tail;
     listaCircular.insertar(actividad);
     estudiante.circular_list.head = listaCircular.head;
     estudiante.circular_list.tail = listaCircular.tail;
-    
+
     estudiante.nray_tree.root = Tree.root;
     estudiante.nray_tree.size = Tree.size;
     $('#espacio_carpetas').html(Tree.getHTML(path));
@@ -94,7 +95,7 @@ function eliminarCarpeta(e) {
 
 function entrarCarpeta(folderName) {
     let path = $('#path').val();
-    let currpath =path == "/"? path + folderName : path + "/" + folderName;
+    let currpath = path == "/" ? path + folderName : path + "/" + folderName;
     $('#path').val(currpath);
     estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
     Tree.root = estudiante.nray_tree.root;
@@ -129,7 +130,7 @@ function showGraphSparse() {
     estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
     Tree.root = estudiante.nray_tree.root;
     let path = $('#path').val();
-    matrix.head = Tree.getFolder(path).matrix.head;
+    matrix.head = Tree.getFolder(path).node.matrix.head;
     console.log(matrix);
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = `digraph G { ${matrix.graph()} }`;
@@ -152,28 +153,26 @@ const subirArchivo = async (e) => {
     estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
     Tree.root = estudiante.nray_tree.root;
     Tree.size = estudiante.nray_tree.size;
-    matrix.head = Tree.getFolder(path).matrix.head;
-    console.log(matrix);
-    console.log(form.fileName);
-    let nameM = Tree.modifyFile(Tree.getFolder(path), form.fileName,0);
-    console.log(Tree.getFolder(path));
+    matrix.head = Tree.getFolder(path).node.matrix.head;
+    let nameM = Tree.modifyFile(Tree.getFolder(path).node, form.fileName, 0);
+    console.log(Tree.getFolder(path).node);
     matrix.insertaCarnet(estudiante.carnet);
-    if(form.file.type == 'text/plain'){
+    if (form.file.type == 'text/plain') {
         let fr = new FileReader();
         matrix.insertaArchivo(fr.result, form.file.type, nameM);
         fr.readAsText(form.file);
         fr.onload = () => {
-            Tree.getFolder(path).files.push({
+            Tree.getFolder(path).node.files.push({
                 name: nameM,
                 content: fr.result,
                 type: form.file.type
             })
             $('#espacio_carpetas').html(Tree.getHTML(path));
         }
-    }else{
+    } else {
         let parseBase64 = await toBase64(form.file);
         matrix.insertaArchivo(parseBase64, form.file.type, nameM);
-        Tree.getFolder(path).files.push({
+        Tree.getFolder(path).node.files.push({
             name: nameM,
             content: parseBase64,
             type: form.file.type
@@ -181,7 +180,7 @@ const subirArchivo = async (e) => {
         $('#espacio_carpetas').html(Tree.getHTML(path));
     }
     matrix.insertar(estudiante.carnet, nameM, "r-w");
-    Tree.getFolder(path).matrix.head = matrix.head;
+    Tree.getFolder(path).node.matrix.head = matrix.head;
     estudiante.nray_tree.root = Tree.root;
     estudiante.nray_tree.size = Tree.size;
     let actividad = `Accion: Se creo archivo\n\\"${form.fileName}\\"\nFecha y Hora: ${new Date().toLocaleString()}`;
@@ -197,7 +196,7 @@ const subirArchivo = async (e) => {
     localStorage.setItem("estudiante", JSON.stringify(JSON.decycle(estudiante)));
 }
 
-function eliminarArchivo(e){
+function eliminarArchivo(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
@@ -223,7 +222,7 @@ function eliminarArchivo(e){
     localStorage.setItem("estudiante", JSON.stringify(JSON.decycle(estudiante)));
 }
 
-function DARPForm(e){
+function DARPForm(e) {
     e.preventDefault();
     let path = $('#path').val();
     const formData = new FormData(e.target);
@@ -231,20 +230,46 @@ function DARPForm(e){
     estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
     Tree.root = estudiante.nray_tree.root;
     Tree.size = estudiante.nray_tree.size;
-    console.log(Tree.getFolder(path));
-    matrix.head = Tree.getFolder(path).matrix.head;
+    matrix.head = Tree.getFolder(path).node.matrix.head;
     matrix.insertaCarnet(form.traversalCarnets);
     matrix.insertar(form.traversalCarnets, form.traversalArchivos, form.traversalPermisos);
-    Tree.getFolder(path).matrix.head = matrix.head;
+    Tree.getFolder(path).node.matrix.head = matrix.head;
     estudiante.nray_tree.root = Tree.root;
     estudiante.nray_tree.size = Tree.size;
     let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
     avlTree.root = temp.root;
     avlTree.ActualizarCarpetas(estudiante);
+    if (localStorage.getItem("permisos") !== null) {
+        arreglo = JSON.retrocycle(JSON.parse(localStorage.getItem("permisos")));
+    }
+    permisos = { pr: estudiante.carnet, d: form.traversalCarnets, u: path, a: form.traversalArchivos, p: form.traversalPermisos };
+    arreglo.push(permisos);
+    console.log(arreglo);
+    localStorage.setItem("permisos", JSON.stringify(JSON.decycle(arreglo)));
     localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
     localStorage.setItem("estudiante", JSON.stringify(JSON.decycle(estudiante)));
 }
-
+function permisos() {
+    if (localStorage.getItem("permisos") !== null) {
+        let html = "";
+        arreglo = JSON.retrocycle(JSON.parse(localStorage.getItem("permisos")));
+        arreglo.forEach(permiso => {
+            html += `
+            <tr>
+            <th>${permiso.pr}</th>
+            <td>${permiso.d}</td>
+            <td>${permiso.u}</td>
+            <td>${permiso.a}</td>
+            <td>${permiso.p}</td>
+            </tr>
+            `
+        });
+        $('#permisos tbody').html(
+            html
+        )
+    }
+}
+$(document).ready(permisos);
 /*function showCarpetas(){
     estudiante = JSON.retrocycle(JSON.parse(localStorage.getItem("estudiante")));
     Tree.root = estudiante.nray_tree.root;
@@ -267,12 +292,12 @@ function showArchivos() {
     let path = $('#path').val();
     Tree.root = estudiante.nray_tree.root;
     Tree.size = estudiante.nray_tree.size;
-    let archivos = Tree.getFolder(path).files;
+    let archivos = Tree.getFolder(path).node.files;
     let html = "    <option selected disabled>Seleccionar archivo</option>";
     archivos.forEach(archivo => {
         html += `
         <option value="${archivo.name}">${archivo.name}</option>
-        ` 
+        `
     });
 
     $('#traversalArchivos').html(
@@ -285,7 +310,7 @@ $(document).ready(showArchivos);
 function showLocalStudents() {
     estudiante = JSON.parse(localStorage.getItem("estudiante"));
     $('#carnet h3').html(
-       estudiante.carnet
+        estudiante.carnet
     )
 }
 
@@ -456,7 +481,7 @@ async function sendMessage() {
         let aux = await blockChain.insert(transmitter, receiver, msgt);
         $('#msg-transmitter').val("");
         // ACTUALIZAR CHATS
-        console.log("actualizado",blockChain);
+        console.log("actualizado", blockChain);
         localStorage.setItem("blockChain", JSON.stringify(JSON.decycle(blockChain)));
         updateChats();
     } else {
@@ -474,7 +499,7 @@ function showGraphChainBlock() {
         let body = blockChain.graph();
         console.log(body);
         $("#graph-chat").attr("src", url + body);
-    }else{
+    } else {
         alert("No hay mensajes");
     }
 }
